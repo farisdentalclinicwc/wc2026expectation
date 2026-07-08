@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>توقع الفائز بكأس العالم</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #87CEEB; /* خلفية زرقاء سمائي */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(8.5px);
+            -webkit-backdrop-filter: blur(8.5px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            width: 100%;
+            max-width: 450px;
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background-color: #ffffff; /* حقول بيضاء */
+            color: #333333;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        input:focus {
+            outline: none;
+            border-color: #0056b3;
+            box-shadow: 0 0 8px rgba(0, 86, 179, 0.5);
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #ffffff;
+            color: #0076a3;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #f0f8ff;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        /* نافذة النتيجة والكود */
+        .result-box {
+            display: none;
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .code-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0076a3;
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>توقع الفائز بكأس العالم</h2>
+    <form id="predictionForm">
+        <div class="form-group">
+            <label for="name">١- الاسم الثلاثي:</label>
+            <input type="text" id="name" required placeholder="اكتب اسمك الثلاثي">
+        </div>
+        <div class="form-group">
+            <label for="phone">٢- رقمك:</label>
+            <input type="tel" id="phone" required placeholder="07xxxxxxxx">
+        </div>
+        <div class="form-group">
+            <label for="prediction">٣- توقع الفريق الفائز بكأس العالم:</label>
+            <input type="text" id="prediction" required placeholder="اسم المنتخب المتوقع">
+        </div>
+        <div class="form-group">
+            <label for="referredBy">٤- من خلال منو وصلت إلنا؟:</label>
+            <input type="text" id="referredBy" required placeholder="اسم الشخص">
+        </div>
+        <button type="submit" id="submitBtn">إرسال</button>
+    </form>
+<div id="resultBox" class="result-box">
+        <h3>تم إرسال توقعك بنجاح! 🎉</h3>
+        <p>الكود الخاص بك هو:</p>
+        <div id="userCode" class="code-display"></div>
+        <p>يرجى الاحتفاظ بهذا الكود.</p>
+    </div>
+</div>
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycby-1KJpbie49-Cfnmin_y4OH4g5TMcx67D216BshVp_SqWn7xWwqgHS7IcMx-ACTclJ/exec';
+
+    document.getElementById('predictionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'جاري الإرسال...';
+
+        const formData = {
+            name: document.getElementById('name').value,
+            phone: document.getElementById('phone').value,
+            prediction: document.getElementById('prediction').value,
+            referredBy: document.getElementById('referredBy').value
+        };
+
+        fetch(scriptURL, {
+            method: 'POST',
+            mode: 'no-cors', 
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+            const generatedCode = "WC-" + randomSuffix;
+
+            document.getElementById('predictionForm').style.display = 'none';
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = 'block';
+            document.getElementById('userCode').innerText = generatedCode;
+        })
+        .catch(error => {
+            alert('حدث خطأ أثناء الإرسال، يرجى المحاولة مرة أخرى.');
+            submitBtn.disabled = false;
+            submitBtn.innerText = 'إرسال';
+        });
+    });
+</script>
+
+</body>
+</html>
