@@ -30,33 +30,26 @@
             max-width: 480px;
         }
         
-        /* قسم اللوغو الجديد */
+        /* قسم الشعار الجديد المستطيل */
         .logo-section {
             text-align: center;
             margin-bottom: 20px;
         }
         .clinic-logo {
-            width: 90px;
-            height: 90px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            background-color: #000000; /* خلفية سوداء داخل الدائرة لتناسب اللوغو */
-        }
-        .clinic-title {
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 8px;
-            margin-bottom: 5px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 280px; /* حجم مثالي ليتناسب مع عرض الكارت */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff; /* خلفية بيضاء مطابقة للصورة الجديدة */
+            padding: 5px;
+            box-sizing: border-box;
         }
 
         h2 {
             text-align: center;
             color: #ffffff;
-            margin-top: 5px;
+            margin-top: 15px;
             margin-bottom: 25px;
             font-size: 22px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
@@ -206,10 +199,9 @@
 <body>
 
 <div class="form-container">
-    <!-- قسم اللوغو والاسم المضاف حديثاً -->
+    <!-- قسم الشعار الجديد -->
     <div class="logo-section">
-        <img src="logo.png" alt="لوغو عيادة فارس" class="clinic-logo">
-        <div class="clinic-title">فارس لطب و تجميل الاسنان</div>
+        <img src="logo.jpg" alt="شعار عيادة فارس لطب وتجميل الأسنان" class="clinic-logo">
     </div>
 
     <h2>توقع الفائز بكأس العالم</h2>
@@ -240,11 +232,12 @@
                     <img src="https://flagcdn.com/w80/ma.png" alt="المغرب">
                     <span>المغرب</span>
                 </label>
-                   <label class="team-option">
+                <!-- اسبانيا -->
+                <label class="team-option">
                     <input type="radio" name="team" value="اسبانيا">
                     <img src="https://flagcdn.com/w80/es.png" alt="اسبانيا">
                     <span>اسبانيا</span>
-                </label>
+                    </label>
                 <!-- بلجيكا -->
                 <label class="team-option">
                     <input type="radio" name="team" value="بلجيكا">
@@ -333,6 +326,7 @@
         .then(response => {
             const randomSuffix = Math.floor(1000 + Math.random() * 9000);
             const generatedCode = "WC-" + randomSuffix;
+
             document.getElementById('predictionForm').style.display = 'none';
             const resultBox = document.getElementById('resultBox');
             resultBox.style.display = 'block';
