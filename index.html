@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>توقع الفائز بكأس العالم</title>
+    <!-- استدعاء مكتبة الأيقونات FontAwesome لأيقونة الانستغرام -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -25,7 +27,7 @@
             -webkit-backdrop-filter: blur(8.5px);
             border: 1px solid rgba(255, 255, 255, 0.4);
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
         }
         h2 {
             text-align: center;
@@ -42,7 +44,7 @@
             color: #ffffff;
             font-weight: bold;
         }
-        input[type="text"], input[type="tel"] {
+        input[type="text"], input[type="tel"], input[type="number"] {
             width: 100%;
             padding: 12px;
             border: 2px solid transparent;
@@ -58,6 +60,57 @@
             border-color: #0056b3;
             box-shadow: 0 0 8px rgba(0, 86, 179, 0.5);
         }
+        
+        /* تصميم شبكة أعلام الفرق */
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .team-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .team-option:hover {
+            background-color: #f0f8ff;
+        }
+        .team-option input {
+            display: none; /* إخفاء دائرة الراديو التقليدية */
+        }
+        .team-option img {
+            width: 45px;
+            height: 30px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .team-option span {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+        /* تأثير عند اختيار الفريق */
+        .team-option input:checked + img {
+            transform: scale(1.1);
+            box-shadow: 0 0 8px #0076a3;
+            border-color: #0076a3;
+        }
+        .team-option input:checked ~ span {
+            color: #0076a3;
+            font-weight: bold;
+        }
+
         button {
             width: 100%;
             padding: 14px;
@@ -77,6 +130,31 @@
         button:active {
             transform: scale(0.98);
         }
+        
+        /* قسم انستغرام بآخر الصفحة */
+        .instagram-section {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+        .instagram-section p {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .insta-icon {
+            font-size: 35px;
+            color: #ffffff;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+        .insta-icon:hover {
+            transform: scale(1.2);
+            color: #e1306c; /* لون انستغرام الشهير عند التمرير */
+        }
+
         /* نافذة النتيجة والكود */
         .result-box {
             display: none;
@@ -106,30 +184,98 @@
             <label for="name">١- الاسم الثلاثي:</label>
             <input type="text" id="name" required placeholder="اكتب اسمك الثلاثي">
         </div>
+        
         <div class="form-group">
             <label for="phone">٢- رقمك:</label>
             <input type="tel" id="phone" required placeholder="07xxxxxxxx">
         </div>
+        
         <div class="form-group">
-            <label for="prediction">٣- توقع الفريق الفائز بكأس العالم:</label>
-            <input type="text" id="prediction" required placeholder="اسم المنتخب المتوقع">
+            <label>٣- توقع الفريق الفائز بكأس العالم:</label>
+            <div class="teams-grid">
+                <!-- فرنسا -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="فرنسا" required>
+                    <img src="https://flagcdn.com/w80/fr.png" alt="فرنسا">
+                    <span>فرنسا</span>
+                </label>
+                <!-- المغرب -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="المغرب">
+                    <img src="https://flagcdn.com/w80/ma.png" alt="المغرب">
+                    <span>المغرب</span>
+                </label>
+                <!-- اسبانيا -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="اسبانيا">
+                    <img src="https://flagcdn.com/w80/es.png" alt="اسبانيا">
+                    <span>اسبانيا</span>
+                </label>
+                <!-- بلجيكا -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="بلجيكا">
+                    <img src="https://flagcdn.com/w80/be.png" alt="بلجيكا">
+                    <span>بلجيكا</span>
+                </label>
+                <!-- النرويج -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="النرويج">
+                    <img src="https://flagcdn.com/w80/no.png" alt="النرويج">
+                    <span>النرويج</span>
+                </label>
+                <!-- انجلترا -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="انجلترا">
+                    <img src="https://flagcdn.com/w80/gb-eng.png" alt="انجلترا">
+                    <span>انجلترا</span>
+                </label>
+                <!-- الارجنتين -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="الارجنتين">
+                    <img src="https://flagcdn.com/w80/ar.png" alt="الارجنتين">
+                    <span>الارجنتين</span>
+                </label>
+                <!-- سويسرا -->
+                <label class="team-option">
+                    <input type="radio" name="team" value="سويسرا">
+                    <img src="https://flagcdn.com/w80/ch.png" alt="سويسرا">
+                    <span>سويسرا</span>
+                </label>
+            </div>
         </div>
+
+        <div class="form-group">
+            <label for="goals">نتيجة الاهداف المتوقعة للفريق:</label>
+            <input type="number" id="goals" required placeholder="كم هدف يتوقع يسجل؟" min="0">
+        </div>
+        
         <div class="form-group">
             <label for="referredBy">٤- من خلال منو وصلت إلنا؟:</label>
             <input type="text" id="referredBy" required placeholder="اسم الشخص">
         </div>
+        
         <button type="submit" id="submitBtn">إرسال</button>
     </form>
-<div id="resultBox" class="result-box">
+
+    <div id="resultBox" class="result-box">
         <h3>تم إرسال توقعك بنجاح! 🎉</h3>
         <p>الكود الخاص بك هو:</p>
         <div id="userCode" class="code-display"></div>
         <p>يرجى الاحتفاظ بهذا الكود.</p>
     </div>
+
+    <!-- قسم تابعنا على انستغرام بآخر الكارت -->
+    <div class="instagram-section">
+        <p>تابعنا على انستغرام</p>
+        <a href="https://instagram.com/farisdentalclinic" target="_blank" title="عيادة فارس لطب الأسنان" class="insta-icon">
+            <i class="fab fa-instagram"></i>
+        </a>
+    </div>
 </div>
 
 <script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby-1KJpbie49-Cfnmin_y4OH4g5TMcx67D216BshVp_SqWn7xWwqgHS7IcMx-ACTclJ/exec';
+    // الرابط الجديد الخاص بك مدمج هنا تلقائياً
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw59rQg_JizXJXydPPEVFi_Bcr8lTbS9GdBVAC4AccaQLAqDF8l01XCCKUCtiE3G1Jj/exec';
 
     document.getElementById('predictionForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -138,10 +284,14 @@
         submitBtn.disabled = true;
         submitBtn.innerText = 'جاري الإرسال...';
 
+        // جلب قيمة الفريق المختار من الراديو بوتون
+        const selectedTeam = document.querySelector('input[name="team"]:checked').value;
+
         const formData = {
             name: document.getElementById('name').value,
             phone: document.getElementById('phone').value,
-            prediction: document.getElementById('prediction').value,
+            prediction: selectedTeam,
+            goals: document.getElementById('goals').value,
             referredBy: document.getElementById('referredBy').value
         };
 
