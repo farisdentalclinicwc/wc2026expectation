@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>توقع الفائز بكأس العالم</title>
+    <title>توقع الفائز بكأس العالم - عيادة فارس</title>
     <!-- استدعاء مكتبة الأيقونات FontAwesome لأيقونة الانستغرام -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -29,11 +29,39 @@
             width: 100%;
             max-width: 480px;
         }
+        
+        /* قسم اللوغو الجديد */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .clinic-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            background-color: #000000; /* خلفية سوداء داخل الدائرة لتناسب اللوغو */
+        }
+        .clinic-title {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 8px;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
         h2 {
             text-align: center;
             color: #ffffff;
+            margin-top: 5px;
             margin-bottom: 25px;
+            font-size: 22px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 10px;
         }
         .form-group {
             margin-bottom: 20px;
@@ -44,7 +72,7 @@
             color: #ffffff;
             font-weight: bold;
         }
-        input[type="text"], input[type="tel"], input[type="number"] {
+        input[type="text"], input[type="tel"] {
             width: 100%;
             padding: 12px;
             border: 2px solid transparent;
@@ -178,7 +206,14 @@
 <body>
 
 <div class="form-container">
+    <!-- قسم اللوغو والاسم المضاف حديثاً -->
+    <div class="logo-section">
+        <img src="logo.png" alt="لوغو عيادة فارس" class="clinic-logo">
+        <div class="clinic-title">فارس لطب و تجميل الاسنان</div>
+    </div>
+
     <h2>توقع الفائز بكأس العالم</h2>
+    
     <form id="predictionForm">
         <div class="form-group">
             <label for="name">١- الاسم الثلاثي:</label>
@@ -205,8 +240,7 @@
                     <img src="https://flagcdn.com/w80/ma.png" alt="المغرب">
                     <span>المغرب</span>
                 </label>
-                <!-- اسبانيا -->
-                <label class="team-option">
+                   <label class="team-option">
                     <input type="radio" name="team" value="اسبانيا">
                     <img src="https://flagcdn.com/w80/es.png" alt="اسبانيا">
                     <span>اسبانيا</span>
@@ -243,11 +277,6 @@
                 </label>
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="goals">نتيجة الاهداف المتوقعة للفريق:</label>
-            <input type="number" id="goals" required placeholder="كم هدف يتوقع يسجل؟" min="0">
-        </div>
         
         <div class="form-group">
             <label for="referredBy">٤- من خلال منو وصلت إلنا؟:</label>
@@ -274,8 +303,7 @@
 </div>
 
 <script>
-    // الرابط الجديد الخاص بك مدمج هنا تلقائياً
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbw59rQg_JizXJXydPPEVFi_Bcr8lTbS9GdBVAC4AccaQLAqDF8l01XCCKUCtiE3G1Jj/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwn3cjAWw1-WC7At9XWMe1kQQfRzPegNWEO6XxhcuPSHfp5HaaLqn7OsJgc3ubybpbf/exec';
 
     document.getElementById('predictionForm').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -284,14 +312,12 @@
         submitBtn.disabled = true;
         submitBtn.innerText = 'جاري الإرسال...';
 
-        // جلب قيمة الفريق المختار من الراديو بوتون
         const selectedTeam = document.querySelector('input[name="team"]:checked').value;
 
         const formData = {
             name: document.getElementById('name').value,
             phone: document.getElementById('phone').value,
             prediction: selectedTeam,
-            goals: document.getElementById('goals').value,
             referredBy: document.getElementById('referredBy').value
         };
 
@@ -307,7 +333,6 @@
         .then(response => {
             const randomSuffix = Math.floor(1000 + Math.random() * 9000);
             const generatedCode = "WC-" + randomSuffix;
-
             document.getElementById('predictionForm').style.display = 'none';
             const resultBox = document.getElementById('resultBox');
             resultBox.style.display = 'block';
